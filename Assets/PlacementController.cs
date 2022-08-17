@@ -19,9 +19,9 @@ public class PlacementController : MonoBehaviour
 
     void Update()
     {
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         if(currentObject != null)
         {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
             if(Physics.Raycast(ray, out RaycastHit hit, 100f, layerMask))
             {
@@ -39,7 +39,17 @@ public class PlacementController : MonoBehaviour
                 currentObject.GetComponent<BagObject>().StartCoroutine("Place");
                 currentObject = null;
             }
-
+        }
+        else
+        {
+            if(Input.GetMouseButtonDown(0))
+            {
+                if(Physics.Raycast(ray, out RaycastHit hit, 100f))
+                {
+                    hit.transform.GetComponent<BoxCollider>().enabled = false;
+                    currentObject = hit.transform;
+                }
+            }
         }
     }
 }
