@@ -10,15 +10,6 @@ public class BagObject : MonoBehaviour
     public LayerMask layerMask;
     bool coroutineStarted = false;
 
-    //public void Place()
-    //{
-    //    collider.enabled = true;
-    //    for(int i = 0; i < nodes.Count; i++)
-    //    {
-    //        nodes[i].SetActive(true);
-    //    }
-    //}
-
     public void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Node"))

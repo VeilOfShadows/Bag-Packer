@@ -6,6 +6,7 @@ public class PlacementController : MonoBehaviour
 {
     private Camera cam;
     public Transform currentObject;
+    public Transform currentButton;
     public Vector3 worldPosition;
     public Vector3 pos;
 
@@ -38,18 +39,22 @@ public class PlacementController : MonoBehaviour
             {
                 currentObject.GetComponent<BagObject>().StartCoroutine("Place");
                 currentObject = null;
+
+                //Destroy(currentButton);
+                currentButton.gameObject.SetActive(false);
+                currentButton = null;
             }
         }
-        else
-        {
-            if(Input.GetMouseButtonDown(0))
-            {
-                if(Physics.Raycast(ray, out RaycastHit hit, 100f))
-                {
-                    hit.transform.GetComponent<BoxCollider>().enabled = false;
-                    currentObject = hit.transform;
-                }
-            }
-        }
+        //else
+        //{
+        //    if(Input.GetMouseButtonDown(0))
+        //    {
+        //        if(Physics.Raycast(ray, out RaycastHit hit, 100f))
+        //        {
+        //            hit.transform.GetComponent<BoxCollider>().enabled = false;
+        //            currentObject = hit.transform;
+        //        }
+        //    }
+        //}
     }
 }
