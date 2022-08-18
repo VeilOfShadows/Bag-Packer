@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public Vector3 worldPosition;
     public Vector3 pos;
     public Material nodeMat;
+    public AudioSource audio;
 
     public Animation anim;
 
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour
                         anim = objectManager.currentBag.GetComponent<Animation>();
                         anim.Play("BagBounce");
                         anim = null;
+                        objectManager.currentBag.GetComponent<AudioSource>().Play();
 
                         currentButton.gameObject.SetActive(false);
                         currentButton = null;
@@ -97,6 +99,7 @@ public class GameManager : MonoBehaviour
 
     public void OpenBag(Transform bag)
     {
+        audio.Play();
         anim = bag.GetComponent<Animation>();
         anim[bag.name].speed = 1;
         anim.Play(bag.name);
@@ -109,6 +112,7 @@ public class GameManager : MonoBehaviour
 
     public void CloseBag()
     {
+        audio.Play();
         Transform bag = objectManager.currentBag;
         anim = bag.GetComponent<Animation>();
         anim[bag.name].speed = -1;

@@ -22,6 +22,7 @@ public class ObjectButton : MonoBehaviour
         }
         selected = true;
 
+        objectManager.GetComponent<AudioSource>().Play();
         if(gameManager.currentButton)
         {
             Destroy(gameManager.currentObject.gameObject);
