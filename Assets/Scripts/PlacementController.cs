@@ -35,26 +35,37 @@ public class PlacementController : MonoBehaviour
                 currentObject.localPosition = pos;
             }
 
-            if(Input.GetKeyDown(KeyCode.J))
+            if(Input.GetMouseButtonDown(0))
             {
-                currentObject.GetComponent<BagObject>().StartCoroutine("Place");
-                currentObject = null;
+                Ray ray2 = cam.ScreenPointToRay(Input.mousePosition);
 
-                //Destroy(currentButton);
-                currentButton.gameObject.SetActive(false);
-                currentButton = null;
+                if(Physics.Raycast(ray, out RaycastHit hit2, 100f, layerMask))
+                {
+                    if(hit2.transform.CompareTag("Node"))
+                    { 
+                        currentObject.GetComponent<BagObject>().StartCoroutine("Place");
+                        currentObject = null;
+
+
+                        currentButton.gameObject.SetActive(false);
+                        currentButton = null;
+                    }
+                }
             }
         }
-        //else
-        //{
-        //    if(Input.GetMouseButtonDown(0))
-        //    {
-        //        if(Physics.Raycast(ray, out RaycastHit hit, 100f))
-        //        {
-        //            hit.transform.GetComponent<BoxCollider>().enabled = false;
-        //            currentObject = hit.transform;
-        //        }
-        //    }
-        //}
+    }
+
+    public void PlaceButton()
+    {
+        currentObject.GetComponent<BagObject>().StartCoroutine("Place");
+        currentObject = null;
+
+        currentButton.gameObject.SetActive(false);
+        currentButton = null;
+    }
+
+    public void RotateButton()
+    {
+        currentObject.transform.Rotate(new Vector3(0,90,0));
     }
 }

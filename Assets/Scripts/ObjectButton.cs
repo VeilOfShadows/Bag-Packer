@@ -21,6 +21,13 @@ public class ObjectButton : MonoBehaviour
             return;
         }
         selected = true;
+        if(placementController.currentButton)
+        {
+            Destroy(placementController.currentObject.gameObject);
+            placementController.currentObject = null;
+            placementController.currentButton.GetComponent<ObjectButton>().selected = false;
+            placementController.currentButton = null;
+        }
         placementController.currentObject = Instantiate(objectToInstantiate, objectManager.currentBag).transform;
         placementController.currentButton = this.transform;
     }
