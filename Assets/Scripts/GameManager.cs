@@ -51,6 +51,9 @@ public class GameManager : MonoBehaviour
                         currentObject.GetComponent<BagObject>().StartCoroutine("Place");
                         currentObject = null;
 
+                        anim = objectManager.currentBag.GetComponent<Animation>();
+                        anim.Play("BagBounce");
+                        anim = null;
 
                         currentButton.gameObject.SetActive(false);
                         currentButton = null;
@@ -96,7 +99,7 @@ public class GameManager : MonoBehaviour
     {
         anim = bag.GetComponent<Animation>();
         anim[bag.name].speed = 1;
-        anim.Play();
+        anim.Play(bag.name);
         mask.GetComponent<Animator>().SetTrigger("FadeIn");
         objectManager.currentBag = bag;
         anim = null;
@@ -109,7 +112,7 @@ public class GameManager : MonoBehaviour
         Transform bag = objectManager.currentBag;
         anim = bag.GetComponent<Animation>();
         anim[bag.name].speed = -1;
-        anim.Play();
+        anim.Play(bag.name);
         mask.GetComponent<Animator>().SetTrigger("FadeOut");
         objectManager.currentBag = null;
         anim = null;

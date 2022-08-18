@@ -6,6 +6,7 @@ public class BagObject : MonoBehaviour
 {
     public List<GameObject> nodes = new List<GameObject>();
     public BoxCollider collider;
+    public Animation anim;
     RaycastHit hit;
     public LayerMask layerMask;
     bool coroutineStarted = false;
@@ -26,6 +27,7 @@ public class BagObject : MonoBehaviour
             yield return null;
         }
         coroutineStarted = true;
+        anim.Play();
         
         collider.enabled = true;
         yield return new WaitForSeconds(0.1f);        
