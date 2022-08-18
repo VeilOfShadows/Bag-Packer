@@ -5,6 +5,7 @@ using UnityEngine;
 public class MaskControl : MonoBehaviour
 {
     public Animator animator;
+
     public void FadeOut()
     {
         animator.SetTrigger("FadeOut");

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class ObjectButton : MonoBehaviour
 {
-    public PlacementController placementController;
+    public GameManager gameManager;
     public ObjectManager objectManager;
     public GameObject objectToInstantiate;
     public bool selected = false;
 
     private void Start()
     {
-        placementController = FindObjectOfType<PlacementController>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     public void InstantiateObject()
@@ -21,14 +21,16 @@ public class ObjectButton : MonoBehaviour
             return;
         }
         selected = true;
-        if(placementController.currentButton)
+
+        if(gameManager.currentButton)
         {
-            Destroy(placementController.currentObject.gameObject);
-            placementController.currentObject = null;
-            placementController.currentButton.GetComponent<ObjectButton>().selected = false;
-            placementController.currentButton = null;
+            Destroy(gameManager.currentObject.gameObject);
+            gameManager.currentObject = null;
+            gameManager.currentButton.GetComponent<ObjectButton>().selected = false;
+            gameManager.currentButton = null;
         }
-        placementController.currentObject = Instantiate(objectToInstantiate, objectManager.currentBag).transform;
-        placementController.currentButton = this.transform;
+
+        gameManager.currentObject = Instantiate(objectToInstantiate, objectManager.currentBag.GetComponent<NodeHolder>().nodeHolder).transform;
+        gameManager.currentButton = this.transform;
     }
 }
