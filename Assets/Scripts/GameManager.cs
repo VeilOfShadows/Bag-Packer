@@ -5,7 +5,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private Camera cam;
-    public BagButtons bagSelector;
     public ObjectManager objectManager;
     public Transform mask;
     public Transform currentObject;
