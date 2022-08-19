@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    #region Variables
     private Camera cam;
     public ObjectManager objectManager;
     public Transform mask;
@@ -12,13 +13,19 @@ public class GameManager : MonoBehaviour
     public Vector3 worldPosition;
     public Vector3 pos;
     public Material nodeMat;
+    public Color nodeColour;
+    public Color transparentNodeColour;
+    public Color indicatorNodeColour;
     public AudioSource audio;
+    public Transform blocker;
 
     public Animation anim;
 
     public LayerMask layerMask;
     public float snapSize;
+    #endregion
 
+    #region Unity Methods
     private void Start()
     {
         cam = Camera.main;
@@ -57,8 +64,10 @@ public class GameManager : MonoBehaviour
                         anim = null;
                         objectManager.currentBag.GetComponent<AudioSource>().Play();
 
+                        //Destroy(currentButton);
                         currentButton.gameObject.SetActive(false);
                         currentButton = null;
+                        objectManager.UpdateItemsLeft();
                     }
                 }
             }
@@ -82,7 +91,9 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Buttons
     public void PlaceButton()
     {
         currentObject.GetComponent<BagObject>().StartCoroutine("Place");
@@ -96,9 +107,12 @@ public class GameManager : MonoBehaviour
     {
         currentObject.transform.Rotate(new Vector3(0,90,0));
     }
+    #endregion
 
+    #region Bag Controls
     public void OpenBag(Transform bag)
     {
+        blocker.gameObject.SetActive(false);
         audio.Play();
         anim = bag.GetComponent<Animation>();
         anim[bag.name].speed = 1;
@@ -107,11 +121,19 @@ public class GameManager : MonoBehaviour
         objectManager.currentBag = bag;
         anim = null;
         nodeMat.color = new Color(nodeMat.color.r, nodeMat.color.g, nodeMat.color.b, 1f);
-        //nodeMat.EnableKeyword("_EMISSION");
     }
 
     public void CloseBag()
     {
+        if(currentButton)
+        {
+            Destroy(currentObject.gameObject);
+            currentObject = null;
+            currentButton.GetComponent<ObjectButton>().selected = false;
+            currentButton = null;
+        }
+
+        blocker.gameObject.SetActive(true);
         audio.Play();
         Transform bag = objectManager.currentBag;
         anim = bag.GetComponent<Animation>();
@@ -121,6 +143,6 @@ public class GameManager : MonoBehaviour
         objectManager.currentBag = null;
         anim = null;
         nodeMat.color = new Color(nodeMat.color.r, nodeMat.color.g, nodeMat.color.b, 0f);
-        //nodeMat.DisableKeyword("_EMISSION");
     }
+    #endregion
 }

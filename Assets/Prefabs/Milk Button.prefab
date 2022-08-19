@@ -147,5 +147,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
   objectManager: {fileID: 0}
-  objectToInstantiate: {fileID: 2392877981133825803, guid: 8eb5fe12a4cb8fe4589e1786fa215e20, type: 3}
+  objectToInstantiate: {fileID: 2392877981133825803, guid: bef22c16e2edabd459184c77bf604d15, type: 3}
   selected: 0

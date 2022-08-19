@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class ObjectButton : MonoBehaviour
 {
+    #region Variables
     public GameManager gameManager;
     public ObjectManager objectManager;
     public GameObject objectToInstantiate;
     public bool selected = false;
+    #endregion
 
+    #region Unity Methods
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        objectManager = gameManager.objectManager;
     }
+    #endregion
 
+    #region Object Instantiation
     public void InstantiateObject()
     {
         if(selected)
@@ -32,6 +38,9 @@ public class ObjectButton : MonoBehaviour
         }
 
         gameManager.currentObject = Instantiate(objectToInstantiate, objectManager.currentBag.GetComponent<NodeHolder>().nodeHolder).transform;
+        gameManager.currentObject.GetComponent<BagObject>().nodeColour = gameManager.nodeColour;
+        gameManager.currentObject.GetComponent<BagObject>().indicatorNodeColour = gameManager.indicatorNodeColour;
         gameManager.currentButton = this.transform;
     }
+    #endregion
 }

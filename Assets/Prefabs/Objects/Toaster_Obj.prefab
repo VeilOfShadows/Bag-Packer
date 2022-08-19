@@ -235,11 +235,14 @@ MonoBehaviour:
   - {fileID: 916664322443944404}
   - {fileID: 7452585882391706619}
   - {fileID: 6614125858108832956}
-  collider: {fileID: 2952305401542798419}
+  colliders:
+  - {fileID: 2952305401542798419}
   anim: {fileID: 4985421338292509209}
   layerMask:
     serializedVersion: 2
     m_Bits: 64
+  nodeColour: {r: 0, g: 0, b: 0, a: 0}
+  indicatorNodeColour: {r: 0, g: 0, b: 0, a: 0}
 --- !u!54 &1806523811
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -265,7 +268,7 @@ BoxCollider:
   m_GameObject: {fileID: 2392877981133825803}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.8, y: 2, z: 2.8}
   m_Center: {x: 0.5, y: 1, z: 1}
