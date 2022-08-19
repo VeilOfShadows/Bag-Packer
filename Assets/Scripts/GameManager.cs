@@ -7,22 +7,42 @@ public class GameManager : MonoBehaviour
     #region Variables
     private Camera cam;
     public ObjectManager objectManager;
-    public Transform mask;
+
+    [SerializeField]
+    private Transform mask;
+
+    [SerializeField]
+    private Material nodeMat;
+
+    [SerializeField]
+    private Color transparentNodeColour;
+
+    [SerializeField]
+    AudioSource audio;
+
+    [SerializeField]
+    private LayerMask layerMask;
+
+    [SerializeField]
+    private float snapSize;
+
+    private Vector3 worldPosition;
+    private Vector3 pos;
+    private Animation anim;
+
     public Transform currentObject;
     public Transform currentButton;
-    public Vector3 worldPosition;
-    public Vector3 pos;
-    public Material nodeMat;
+
     public Color nodeColour;
-    public Color transparentNodeColour;
     public Color indicatorNodeColour;
-    public AudioSource audio;
+    public Color errorNodeColour;
+
     public Transform blocker;
 
-    public Animation anim;
+    public bool isTutorial;
+    public TutorialManager tutorialManager;    
 
-    public LayerMask layerMask;
-    public float snapSize;
+    public bool canBePlaced;
     #endregion
 
     #region Unity Methods
@@ -45,30 +65,9 @@ public class GameManager : MonoBehaviour
                 pos.y = worldPosition.y;
                 pos.z = worldPosition.z + 1f;
 
-                currentObject.localPosition = pos;
-            }
-
-            if(Input.GetMouseButtonDown(0))
-            {
-                Ray ray2 = cam.ScreenPointToRay(Input.mousePosition);
-
-                if(Physics.Raycast(ray2, out RaycastHit hit2, 100f, layerMask))
+                if(hit.transform.root == objectManager.currentBag)
                 {
-                    if(hit2.transform.CompareTag("Node"))
-                    { 
-                        currentObject.GetComponent<BagObject>().StartCoroutine("Place");
-                        currentObject = null;
-
-                        anim = objectManager.currentBag.GetComponent<Animation>();
-                        anim.Play("BagBounce");
-                        anim = null;
-                        objectManager.currentBag.GetComponent<AudioSource>().Play();
-
-                        //Destroy(currentButton);
-                        currentButton.gameObject.SetActive(false);
-                        currentButton = null;
-                        objectManager.UpdateItemsLeft();
-                    }
+                    currentObject.localPosition = pos;
                 }
             }
         }
@@ -78,13 +77,18 @@ public class GameManager : MonoBehaviour
             {
                 if(objectManager.currentBag == null)
                 {
-                    Debug.Log("RAY");
                     Ray mouseRay = cam.ScreenPointToRay(Input.mousePosition);
                     if(Physics.Raycast(mouseRay, out RaycastHit mouseHit, 300f))
                     {
                         if(mouseHit.transform.CompareTag("Bag")) 
                         {
                             OpenBag(mouseHit.transform);
+                            if(isTutorial && tutorialManager.tutorialStep == 0)
+                            {
+                                Destroy(tutorialManager.openBagPrompt);
+                                tutorialManager.selectItemPrompt.SetActive(true);
+                                tutorialManager.tutorialStep = 1;
+                            }
                         }
                     }
                 }
@@ -94,18 +98,43 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Buttons
-    public void PlaceButton()
+    public void Place()
     {
+        //Handheld.Vibrate();
+        if(!canBePlaced)
+        {
+            return;
+        }
+
         currentObject.GetComponent<BagObject>().StartCoroutine("Place");
         currentObject = null;
 
+        anim = objectManager.currentBag.GetComponent<Animation>();
+        anim.Play("BagBounce");
+        anim = null;
+        objectManager.currentBag.GetComponent<AudioSource>().Play();
+
+        //Destroy(currentButton);
         currentButton.gameObject.SetActive(false);
         currentButton = null;
+        objectManager.UpdateItemsLeft();
+        if(isTutorial && tutorialManager.tutorialStep == 3)
+        {
+            Destroy(tutorialManager.confirmPrompt);
+            tutorialManager.closeBagPrompt.SetActive(true);
+            tutorialManager.tutorialStep = 4;
+        }
     }
 
     public void RotateButton()
     {
         currentObject.transform.Rotate(new Vector3(0,90,0));
+        if(isTutorial && tutorialManager.tutorialStep == 2)
+        {
+            Destroy(tutorialManager.rotatePrompt);
+            tutorialManager.confirmPrompt.SetActive(true);
+            tutorialManager.tutorialStep = 3;
+        }
     }
     #endregion
 
@@ -120,7 +149,7 @@ public class GameManager : MonoBehaviour
         mask.GetComponent<Animator>().SetTrigger("FadeIn");
         objectManager.currentBag = bag;
         anim = null;
-        nodeMat.color = new Color(nodeMat.color.r, nodeMat.color.g, nodeMat.color.b, 1f);
+        nodeMat.color = nodeColour;
     }
 
     public void CloseBag()
@@ -142,7 +171,13 @@ public class GameManager : MonoBehaviour
         mask.GetComponent<Animator>().SetTrigger("FadeOut");
         objectManager.currentBag = null;
         anim = null;
-        nodeMat.color = new Color(nodeMat.color.r, nodeMat.color.g, nodeMat.color.b, 0f);
+        nodeMat.color = transparentNodeColour;
+        if(isTutorial && tutorialManager.tutorialStep == 4)
+        {
+            Destroy(tutorialManager.closeBagPrompt);
+            isTutorial = false;
+            tutorialManager.tutorialStep = 5;
+        }
     }
     #endregion
 }

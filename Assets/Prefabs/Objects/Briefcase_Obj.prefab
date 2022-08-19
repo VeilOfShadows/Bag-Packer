@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 5508505623171117327}
   m_Layer: 0
   m_Name: Briefcase_Obj
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -254,8 +254,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.8, y: 1, z: 2.8}
-  m_Center: {x: 1, y: 0.5, z: 1}
+  m_Size: {x: 2.8, y: 0.8, z: 2.8}
+  m_Center: {x: 1, y: 0.4, z: 1}
 --- !u!54 &6431785382473578645
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -302,8 +302,12 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  nodeColour: {r: 0, g: 0, b: 0, a: 0}
   indicatorNodeColour: {r: 0, g: 0, b: 0, a: 0}
+  nodeColour: {r: 0, g: 0, b: 0, a: 0}
+  renderers:
+  - {fileID: 3809022211747581067}
+  objectMat: {fileID: 2100000, guid: 8550dc613750b4043b5e1651d46f38a3, type: 2}
+  errorMat: {fileID: 2100000, guid: e937f879ecffad349876a0fffce3bd89, type: 2}
 --- !u!65 &5508505623171117327
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -315,8 +319,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 1, z: 0.8}
-  m_Center: {x: 1, y: 0.5, z: 3}
+  m_Size: {x: 0.8, y: 0.8, z: 0.8}
+  m_Center: {x: 1, y: 0.4, z: 3}
 --- !u!1 &2464806423583635328
 GameObject:
   m_ObjectHideFlags: 0

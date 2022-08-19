@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 5991917530444493487}
   m_Layer: 0
   m_Name: Hairdryer_Obj
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -192,8 +192,13 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  nodeColour: {r: 0, g: 0, b: 0, a: 0}
   indicatorNodeColour: {r: 0, g: 0, b: 0, a: 0}
+  nodeColour: {r: 0, g: 0, b: 0, a: 0}
+  renderers:
+  - {fileID: 5185961457339562458}
+  objectMat:
+  - {fileID: 2100000, guid: 1ae6b4e1007d64d4492b430237842edf, type: 2}
+  errorMat: {fileID: 2100000, guid: e937f879ecffad349876a0fffce3bd89, type: 2}
 --- !u!54 &1806523811
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -221,8 +226,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 2, z: 0.8}
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Size: {x: 0.8, y: 1.6, z: 0.8}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!65 &5991917530444493487
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -234,8 +239,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 0.8}
-  m_Center: {x: 0.9, y: 1.5, z: 0}
+  m_Size: {x: 0.8, y: 0.8, z: 0.8}
+  m_Center: {x: 1, y: 1.4, z: 0}
 --- !u!1 &3426582048477286312
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6516560367451649574}
   m_Layer: 0
   m_Name: Milk_Obj
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,8 +47,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 3, z: 0.8}
-  m_Center: {x: 0, y: 1.5, z: 0}
+  m_Size: {x: 0.7, y: 2.8, z: 0.7}
+  m_Center: {x: 0, y: 1.4, z: 0}
 --- !u!54 &6431785382473578645
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -85,8 +85,13 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  nodeColour: {r: 0, g: 0, b: 0, a: 0}
+  isValid: 0
+  canBePlaced: 1
+  detectTriggers: 1
   indicatorNodeColour: {r: 0, g: 0, b: 0, a: 0}
+  nodeColour: {r: 0, g: 0, b: 0, a: 0}
+  errorNodeColour: {r: 0, g: 0, b: 0, a: 0}
+  gameManager: {fileID: 0}
 --- !u!1 &2464806423583635328
 GameObject:
   m_ObjectHideFlags: 0

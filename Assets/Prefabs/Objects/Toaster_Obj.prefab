@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 2952305401542798419}
   m_Layer: 0
   m_Name: Toaster_Obj
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -241,8 +241,18 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  nodeColour: {r: 0, g: 0, b: 0, a: 0}
   indicatorNodeColour: {r: 0, g: 0, b: 0, a: 0}
+  nodeColour: {r: 0, g: 0, b: 0, a: 0}
+  renderers:
+  - {fileID: 8924151129994071752}
+  objectMat:
+  - {fileID: 2100000, guid: eb3fb3eb5383d0345886a867af75faa4, type: 2}
+  - {fileID: 2100000, guid: 8550dc613750b4043b5e1651d46f38a3, type: 2}
+  - {fileID: 2100000, guid: ffb6e32ce96808f4197dab47dab730ec, type: 2}
+  - {fileID: 2100000, guid: ffb6e32ce96808f4197dab47dab730ec, type: 2}
+  - {fileID: 2100000, guid: 157b71fb132c2f049a2e59584399b484, type: 2}
+  - {fileID: 2100000, guid: ffb6e32ce96808f4197dab47dab730ec, type: 2}
+  errorMat: {fileID: 2100000, guid: e937f879ecffad349876a0fffce3bd89, type: 2}
 --- !u!54 &1806523811
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -270,8 +280,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.8, y: 2, z: 2.8}
-  m_Center: {x: 0.5, y: 1, z: 1}
+  m_Size: {x: 1.8, y: 1.6, z: 2.8}
+  m_Center: {x: 0.5, y: 0.8, z: 1}
 --- !u!1 &3248054263193682463
 GameObject:
   m_ObjectHideFlags: 0

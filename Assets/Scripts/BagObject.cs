@@ -5,57 +5,109 @@ using UnityEngine;
 public class BagObject : MonoBehaviour
 {
     #region Variables
-    public List<GameObject> nodes = new List<GameObject>();
-    public List<BoxCollider> colliders;
-    public Animation anim;
-    RaycastHit hit;
-    public LayerMask layerMask;
+    [SerializeField]
+    private List<GameObject> nodes = new List<GameObject>();
+
+    [SerializeField]
+    private List<BoxCollider> colliders;
+
+    [SerializeField]
+    private Animation anim;
+
+    [SerializeField]
+    private LayerMask layerMask;
+    public bool isValid = true;
+
     bool coroutineStarted = false;
     bool placing = false;
+    bool canBePlaced = true;
+    bool detectTriggers = true;
 
-    public Color nodeColour;
     public Color indicatorNodeColour;
+    public Color nodeColour;
+    public Color errorNodeColour;
+    public GameManager gameManager;
+
+    RaycastHit hit;
     #endregion
 
     #region Collider Triggers
-    public void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Node"))
+        if(detectTriggers)
         {
-            //Debug.Log("HIT");
-            //if(placing)
-            //{
-            //    Destroy(other.gameObject);
-            //}
-            other.GetComponentInChildren<MeshRenderer>().material.color = indicatorNodeColour;
+            if(!other.CompareTag("Bounds"))
+            {
+                gameManager.canBePlaced = true;
+                isValid = true;
+            }
+
+            if(other.CompareTag("Node"))
+            {
+                if(isValid)
+                {
+                    other.GetComponentInChildren<MeshRenderer>().material.color = indicatorNodeColour;
+                }
+                else
+                {
+                    other.GetComponentInChildren<MeshRenderer>().material.color = errorNodeColour;
+
+                }
+            }
         }
+
     }
 
-    public void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        if(other.CompareTag("Node"))
-        {
-            //Debug.Log("HIT");
-            //if(placing)
-            //{
-            //    Destroy(other.gameObject);
-            //}
-            other.GetComponentInChildren<MeshRenderer>().material.color = nodeColour;
-        }
-    }
-
-    public void OnTriggerStay(Collider other)
-    {
-        if(!placing)
-        {
-            return;
-        }
-        else
+        if(detectTriggers)
         {
             if(other.CompareTag("Node"))
             {
-                Debug.Log("HIT");
-                Destroy(other.gameObject);
+                other.GetComponentInChildren<MeshRenderer>().material.color = nodeColour;
+            }
+
+            if(other.CompareTag("Bounds"))
+            {
+                gameManager.canBePlaced = true;
+                isValid = true;
+            }
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(detectTriggers)
+        {
+            if(!placing)
+            {
+                if(other.CompareTag("Bounds"))
+                {
+                    gameManager.canBePlaced = false;
+                    isValid = false;
+                }
+                else if(other.CompareTag("Node"))
+                {
+                    if(isValid)
+                    {
+                        other.GetComponentInChildren<MeshRenderer>().material.color = indicatorNodeColour;
+                    }
+                    else
+                    {
+                        other.GetComponentInChildren<MeshRenderer>().material.color = errorNodeColour;
+
+                    }
+                }
+
+
+                return;
+            }
+            else
+            {
+                if(other.CompareTag("Node"))
+                {
+                    Destroy(other.gameObject);
+                }
             }
         }
     }
@@ -69,24 +121,24 @@ public class BagObject : MonoBehaviour
             yield return null;
         }
         coroutineStarted = true;
+
         anim.Play();
-        //for(int i = 0; i < colliders.Count; i++)
-        //{
-        //    colliders[i].enabled = true;
-        //}
 
         placing = true;
         yield return new WaitForSeconds(0.1f);
-        for(int i = 0; i < colliders.Count; i++)
-        {
-            colliders[i].enabled = false;
-        }
-        yield return new WaitForSeconds(0.1f);
+        detectTriggers = false;
+
+        //for(int i = 0; i < colliders.Count; i++)
+        //{
+        //    colliders[i].enabled = false;
+        //}
+
         for(int i = 0; i < nodes.Count; i++)
         {
             nodes[i].SetActive(true);
             nodes[i].transform.parent = this.transform.parent;
         }
+
         coroutineStarted = false;
         yield return null;
     }

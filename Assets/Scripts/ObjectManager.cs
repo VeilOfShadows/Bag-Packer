@@ -5,19 +5,35 @@ using TMPro;
 public class ObjectManager : MonoBehaviour
 {
     #region Variables
-    public Transform iconHolder;
-    public Transform currentBag;
-    public TextMeshProUGUI itemsLeftText;
-    public List<GameObject> possibleObjects = new List<GameObject>();
-    public List<GameObject> objectsToPlace = new List<GameObject>();
-    public int amount;
-    public bool randomise;
-    public int itemsLeftCount = 0;
+    [SerializeField]
+    private Transform iconHolder;
+
+    [SerializeField]
+    private TextMeshProUGUI itemsLeftText;
+
+    [SerializeField]
+    private List<GameObject> possibleObjects = new List<GameObject>();
+
+    [SerializeField]
+    private int amount;
+
+    [SerializeField]
+    private int itemsLeftCount = 0;
+
+    [SerializeField]
+    private bool randomise;
+
+    [SerializeField]
     private LevelManager levelManager;
+
+    [SerializeField]
+    private List<GameObject> objectsToPlace = new List<GameObject>();
+
+    public Transform currentBag;
     #endregion
 
     #region Unity Methods
-    public void Start()
+    private void Start()
     {
         levelManager = FindObjectOfType<LevelManager>();
         if(randomise)

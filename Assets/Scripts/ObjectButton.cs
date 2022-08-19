@@ -5,9 +5,14 @@ using UnityEngine;
 public class ObjectButton : MonoBehaviour
 {
     #region Variables
-    public GameManager gameManager;
+    [SerializeField]
+    private GameManager gameManager;
+
+    [SerializeField]
+    private GameObject objectToInstantiate;
+
     public ObjectManager objectManager;
-    public GameObject objectToInstantiate;
+
     public bool selected = false;
     #endregion
 
@@ -22,6 +27,13 @@ public class ObjectButton : MonoBehaviour
     #region Object Instantiation
     public void InstantiateObject()
     {
+        if(gameManager.isTutorial && gameManager.tutorialManager.tutorialStep == 1)
+        {
+            Destroy(gameManager.tutorialManager.selectItemPrompt);
+            gameManager.tutorialManager.rotatePrompt.SetActive(true);
+            gameManager.tutorialManager.tutorialStep = 2;
+        }
+
         if(selected)
         {
             return;
@@ -39,7 +51,9 @@ public class ObjectButton : MonoBehaviour
 
         gameManager.currentObject = Instantiate(objectToInstantiate, objectManager.currentBag.GetComponent<NodeHolder>().nodeHolder).transform;
         gameManager.currentObject.GetComponent<BagObject>().nodeColour = gameManager.nodeColour;
+        gameManager.currentObject.GetComponent<BagObject>().errorNodeColour = gameManager.errorNodeColour;
         gameManager.currentObject.GetComponent<BagObject>().indicatorNodeColour = gameManager.indicatorNodeColour;
+        gameManager.currentObject.GetComponent<BagObject>().gameManager = gameManager;
         gameManager.currentButton = this.transform;
     }
     #endregion

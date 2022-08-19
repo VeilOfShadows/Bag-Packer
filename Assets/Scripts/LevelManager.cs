@@ -6,10 +6,14 @@ using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
-    public static LevelManager instance;
-    public AudioSource audio;
-    public ParticleSystem particles;
-    public GameObject canvas;
+    private static LevelManager instance;
+    [SerializeField]
+    private AudioSource audio;
+    [SerializeField]
+    private ParticleSystem particles;
+    [SerializeField]
+    private GameObject canvas;
+
     public int currentLevel;
 
     private void Awake()
